@@ -471,7 +471,7 @@ static GtkWidget * create_view_and_model_save (char *w, int mid)
   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
   path = gtk_tree_path_new_from_string("0");
   gtk_tree_selection_select_path (selection,path);
-  free(path);
+  //free(path);
   gtk_tree_selection_set_select_function(selection, view_sel_save2, NULL, NULL);
   gtk_tree_selection_set_mode(selection,GTK_SELECTION_BROWSE);
 

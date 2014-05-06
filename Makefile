@@ -34,7 +34,7 @@ DLIB=-rdynamic -ldl -lm
 CLIB=-fPIC -shared -nostartfiles
 GCC=gcc -O2
 
-DIR_INSTALL=/usr
+DIR_INSTALL=/home/wjc/work/bebetes_show/local
 NOM_PROJ_INSTALL=bebetes_show
 
 OBJS=src/stat.o src/main_gtk.o src/ogl.o src/loader.o src/textures.o src/divers.o src/taskbrowser.o src/tga.o src/fourmi.o src/remote_control.o src/list_fav.o src/map.o src/object.o src/propag.o src/loading.o src/discrimination.o src/map_editor.o src/bmp.o src/options.o src/iaction.o src/info.o 
