@@ -926,7 +926,7 @@ static GtkTreeModel * create_and_fill_save ()
 
   while ((d1 = readdir(d)))
   {
-	  if (!strcmp(d1->d_name, ".") || !strcmp(d1->d_name, "."))
+	  if (!strcmp(d1->d_name, "..") || !strcmp(d1->d_name, "."))
 		  continue;
 
 	  gtk_list_store_append (store, &iter);
