@@ -1,26 +1,26 @@
 # The Bebete Show Makefile...
 # todo : chercher du cote de install (man install)
 #
-# MAINTENANCE : 
+# MAINTENANCE :
 #
 # Garder les fichiers source dans le dossier src.
-# rajouter les .c a compiler dans la variable FICHIERS 
+# rajouter les .c a compiler dans la variable FICHIERS
 # (ou la remplacer par FICHIERS=src/*.c ... bof hein)
-# 
-# et ajouter le .o dans la macro OBJS, et ajouter les 
+#
+# et ajouter le .o dans la macro OBJS, et ajouter les
 # cibles avec les dependances. (voir en bas)
 #
 # Tous fichiers externes (images, textures...) sont
-# dans le dossier share/bebetes_show/ 
-# donc faut y acceder par ../share/bebetes_show/ 
-# 
-# install c'est de la merde... je prefere le faire 
+# dans le dossier share/bebetes_show/
+# donc faut y acceder par ../share/bebetes_show/
+#
+# install c'est de la merde... je prefere le faire
 # a la main et puis c'est tout...
 #
 # pour obtenir les dependances, soit les rajouter a la
-# main avec gcc -MM mais y'a plus simple. toutes les 
-# suprrimer et lancer ca  : 
-#  gcc -MM src/*.c 1>> Makefile 
+# main avec gcc -MM mais y'a plus simple. toutes les
+# suprrimer et lancer ca  :
+#  gcc -MM src/*.c 1>> Makefile
 #${GCC} ${GTK_DEPS} ${GLEXT_DEPS} ${OBJS} -o ${EXE}
 #	mv ${EXE} bin/${EXE}
 
@@ -37,8 +37,8 @@ GCC=gcc -O2
 DIR_INSTALL=/home/wjc/work/bebetes_show/local
 NOM_PROJ_INSTALL=bebetes_show
 
-OBJS=src/stat.o src/main_gtk.o src/ogl.o src/loader.o src/textures.o src/divers.o src/taskbrowser.o src/tga.o src/fourmi.o src/remote_control.o src/list_fav.o src/map.o src/object.o src/propag.o src/loading.o src/discrimination.o src/map_editor.o src/bmp.o src/options.o src/iaction.o src/info.o 
-#OBJS=src/main_gtk.o src/ogl.o src/loader.o src/textures.o src/divers.o src/taskbrowser.o src/tga.o src/fourmi.o src/remote_control.o src/list_fav.o src/map.o src/object.o src/propag.o src/loading.o src/discrimination.o src/map_editor.o src/bmp.o src/png.o src/jpeg.o src/options.o src/iaction.o src/info.o 
+OBJS=src/stat.o src/main_gtk.o src/ogl.o src/loader.o src/textures.o src/divers.o src/taskbrowser.o src/tga.o src/fourmi.o src/remote_control.o src/list_fav.o src/map.o src/object.o src/propag.o src/loading.o src/discrimination.o src/map_editor.o src/bmp.o src/options.o src/iaction.o src/info.o
+#OBJS=src/main_gtk.o src/ogl.o src/loader.o src/textures.o src/divers.o src/taskbrowser.o src/tga.o src/fourmi.o src/remote_control.o src/list_fav.o src/map.o src/object.o src/propag.o src/loading.o src/discrimination.o src/map_editor.o src/bmp.o src/png.o src/jpeg.o src/options.o src/iaction.o src/info.o
 
 OBJS_GE=src/gtk+extra/gtkplot.o src/gtk+extra/gtkplotdata.o src/gtk+extra/gtkplotcanvas.o src/gtk+extra/gtkplotcanvasplot.o src/gtk+extra/gtkplotcanvastext.o src/gtk+extra/gtkplotcanvaspixmap.o src/gtk+extra/gtkplotcanvasellipse.o src/gtk+extra/gtkplotcanvasline.o src/gtk+extra/gtkplotcanvasrectangle.o src/gtk+extra/gtkpsfont.o src/gtk+extra/gtkplotgdk.o src/gtk+extra/gtkextra-marshal.o src/gtk+extra/gtkplotpolar.o src/gtk+extra/gtkplot3d.o src/gtk+extra/gtkplotpc.o src/gtk+extra/gtkplotarray.o src/gtk+extra/gtkextra.o src/gtk+extra/gtkplotps.o src/gtk+extra/gtkplotsurface.o src/gtk+extra/gtkplotdt.o src/gtk+extra/gtkplotbar.o src/gtk+extra/gtkplotprint.o
 
@@ -67,10 +67,10 @@ TAR=tar cjf
 
 .SUFFIXES: .o .c
 .c.o:
-	$(GCC) ${GTK_DEPS2} ${GLEXT_DEPS2} -c $< -o $@ 
+	$(GCC) ${GTK_DEPS2} ${GLEXT_DEPS2} -c $< -o $@
 ebbs: libs gtkextra libs ${OBJS}
 #	${GCC} ${DLIB} ${GTK_DEPS} ${GLEXT_DEPS} ${OBJS} -ljpeg -o bin/${EXE}
-	${GCC} ${DLIB} ${GTK_DEPS} ${GLEXT_DEPS} ${OBJS} ${OBJS_GE} -o bin/${EXE}
+	${GCC} ${OBJS} ${OBJS_GE} -o bin/${EXE} ${DLIB} ${GTK_DEPS} ${GLEXT_DEPS}
 	@echo "       ,_      _,       "
 	@echo "         '.__.'         "
 	@echo "    '-,   (__)   ,-'    "
@@ -100,7 +100,7 @@ clean:
 clean_src:
 	-rm src/*~ src/\#* src/*\#
 clean_exe:
-	-rm bin/* lib/* src/*.o 
+	-rm bin/* lib/* src/*.o
 b:
 	ocaml bck.ml "${FICHIERS_BACKUP}"
 backup:
@@ -164,7 +164,7 @@ remote_control.o: src/remote_control.c src/lib_bbs_behavior.h src/loader.h src/d
 taskbrowser.o: src/taskbrowser.c src/taskbrowser.h src/lib_bbs_behavior.h src/loader.h src/divers.h
 textures.o: src/textures.c src/textures.h src/glbmp.h src/tga.h
 jpeg.o: src/jpeg.c
-	$(GCC) ${GTK_DEPS2} ${GLEXT_DEPS2} -ljpeg -c $< -o $@ 
+	$(GCC) ${GTK_DEPS2} ${GLEXT_DEPS2} -ljpeg -c $< -o $@
 options.o: src/options.c src/options.h
 iaction.o: src/iaction.c src/iaction.h src/divers.h
 info.o: src/info.c src/info.h src/divers.h src/camera.h src/loader.h src/lib_bbs_behavior.c
