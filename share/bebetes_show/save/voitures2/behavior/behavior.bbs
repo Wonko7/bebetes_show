@@ -1,0 +1,23 @@
+4
+w:0.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:0 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:0 op:1 a:-1 n:0
+w:2.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:5 op:2 a:-1 n:1
+p:6 op:1 a:-1 n:0
+w:2.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:3 op:4 a:7 n:1
+p:1 op:1 a:0 n:0

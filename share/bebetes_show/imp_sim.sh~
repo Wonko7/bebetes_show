@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#mkdir "~/.bebetes_show/save/${1}"
+tar xjf "${1}" -C ~/.bebetes_show/save/

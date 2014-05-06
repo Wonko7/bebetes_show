@@ -1,0 +1,9 @@
+Ecrit pour linux, mais devrait marcher sur tout systeme UNIX. 
+Par defaut le dossier d'installation sera /usr, si vous voulez
+le changer editer le Makefile et changer la variable DIR_INSTALL
+
+ensuite :
+make
+make install
+
+l'executable cree est bebete_show.

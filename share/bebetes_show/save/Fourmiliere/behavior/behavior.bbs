@@ -1,0 +1,310 @@
+52
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:0 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:50.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:0 op:5 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:10.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:9 op:3 a:-1 n:0
+w:0.000000 i:0.000000 t:80.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:6 op:3 a:-1 n:0
+w:4.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:8 op:2 a:-1 n:1
+p:1 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:5.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:9 op:3 a:-1 n:0
+w:0.000000 i:0.000000 t:80.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:6 op:3 a:-1 n:0
+w:2.000000 i:0.000000 t:80.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:7 op:2 a:-1 n:1
+p:10 op:5 a:5 n:0
+w:8.000000 i:0.000000 t:200.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:8 op:2 a:-1 n:1
+p:1 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:10.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:9 op:3 a:-1 n:0
+w:0.000000 i:0.000000 t:40.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:6 op:3 a:-1 n:0
+w:10.000000 i:0.000000 t:367.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:8 op:2 a:-1 n:1
+p:1 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:5.000000 i:0.000000 t:50.000000 c:-1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:14 op:5 a:30 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:31 n:1
+p:11 op:0 a:0 n:1
+p:13 op:4 a:29 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:32 n:1
+p:5 op:5 a:0 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:33 n:1
+p:11 op:0 a:1 n:1
+p:13 op:4 a:29 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:34 n:1
+p:5 op:5 a:1 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:42 n:1
+p:11 op:0 a:5 n:1
+p:13 op:4 a:35 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:36 n:1
+p:11 op:0 a:2 n:1
+p:13 op:4 a:29 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:37 n:1
+p:5 op:5 a:2 n:0
+w:2.000000 i:0.000000 t:60.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:6 op:2 a:-1 n:1
+p:5 op:5 a:-1 n:0
+w:2.000000 i:0.000000 t:60.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:7 op:2 a:-1 n:1
+p:13 op:4 a:42 n:1
+p:10 op:5 a:5 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:3.000000 i:0.000000 t:30.000000 c:0.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:42 n:1
+p:11 op:0 a:5 n:1
+p:13 op:4 a:29 n:1
+p:12 op:1 a:-1 n:0
+w:10.000000 i:0.000000 t:630.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:8 op:2 a:-1 n:1
+p:1 op:1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:5.000000 i:0.000000 t:50.000000 c:-1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:14 op:5 a:45 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:46 n:1
+p:11 op:0 a:0 n:1
+p:13 op:4 a:44 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:47 n:1
+p:5 op:5 a:0 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:33 n:1
+p:11 op:0 a:1 n:1
+p:13 op:4 a:44 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:49 n:1
+p:5 op:5 a:1 n:0
+w:4.000000 i:0.000000 t:15.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:57 n:1
+p:11 op:0 a:5 n:1
+p:13 op:4 a:50 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:51 n:1
+p:11 op:0 a:2 n:1
+p:13 op:4 a:44 n:1
+p:12 op:1 a:-1 n:0
+w:4.000000 i:0.000000 t:30.000000 c:1.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:13 op:4 a:52 n:1
+p:5 op:5 a:2 n:0
+w:2.000000 i:0.000000 t:60.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:6 op:2 a:-1 n:1
+p:5 op:5 a:-1 n:0
+w:2.000000 i:0.000000 t:60.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:7 op:2 a:-1 n:1
+p:13 op:4 a:57 n:1
+p:10 op:5 a:5 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:0.000000 i:0.000000 t:0.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:-1 op:-1 a:-1 n:0
+w:3.000000 i:0.000000 t:30.000000 c:0.000000
+#interruption:
+p:12 op:1 a:-1
+#brick:
+p:13 op:4 a:57 n:1
+p:11 op:0 a:5 n:1
+p:13 op:4 a:44 n:1
+p:12 op:1 a:-1 n:0
+w:3.000000 i:0.000000 t:15.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:16 op:2 a:-1 n:1
+p:17 op:1 a:-1 n:0
+w:10.000000 i:0.000000 t:630.000000 c:0.000000
+#interruption:
+p:-1 op:-1 a:-1
+#brick:
+p:8 op:2 a:-1 n:1
+p:2 op:1 a:-1 n:0

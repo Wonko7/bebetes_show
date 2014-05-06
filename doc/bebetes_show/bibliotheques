@@ -1,0 +1,162 @@
+Les bibliothèques... comment dire... ? 
+
+
+
+Pour les utilisateurs avancés, très motivés, sans vie social... et je ne parle pas du geek de base... là, c'est du vrai geek.
+
+
+
+Tu es un geek, tu sais coder en C. Si tu sais pas coder en C t'es pas un geek, et tu t'appelles Veronique.
+
+La première chose à faire c'est d'écrire les enums qui vont paramètrer les différents tableaux qu'on va creer :
+Chaque élement de l'enum correspond à une case du tableau et juste pour rendre les choses plus claire, à un nom qui décrit le rôle qu'il y occupe.
+
+On écrit d'abord la liste des stimuli : 
+C'est aux stimuli qu'on associe la reaction d'un agent.
+Un seul type d'agent peut répondre au même stimulus.
+Dans notre logiciel "Bebetes Show" on retrouvera la liste des stimuli auxquels un type d'agent peut répondre en sélectionnant le type d'agent en question et en regardant la liste "Stimuli".
+
+On écrit la liste des types d'agents, juste après celle des types d'objets et un peu plus bas les differents types de sols dont on va avoir besoin.
+
+On écrit ensuite la liste des primitives : 
+Une primitive est un bout de la réponse que l'agent aura à un stimulus. Ce sont les actions primaires que l'agent pourra executer. 
+
+Ensuite vient la liste des opérateurs :
+Les opérateurs servent à enchaîner les primitives et ainsi décrire le comportement de nos agents ! (Oui, car le comportement est décrit par l'ensemble des réponses aux stimuli, connard). 
+
+On écrit l'enum des interactions :
+Alors dans l'onglet "Simulation" dans le petit carré de droite il y a une liste de fonctions qui peuvent être éxecutées lorsqu'on clique sur la fenêtre openGL à droite : Dans le jargon bebetes show, nous les appellons des interactions.
+
+Et le dernier enum sert pour les arguments passés en paramètres depuis le TaskBrowser. Je ne vois pas pourquoi tu modifirai ca... d'ailleurs je viens de me rendre compte qu'il n'est pas à jour, et ne devrai pas marcher. Bon, en gros, c'est un truc que tu touches pas en théorie... ou alors t'es un utilisateur ultra avancé, et tu n'as pas besoin de se manuel (donc ouste !). 
+PS: Je viens de verifier, et en fait, sisi, c'est bon, il est bien à jour et correcte, je suis juste fatigué. hop.
+
+Pour chaque enum on a mis un élement supplementaire qui commence par "NB_" (sauf pour les arguments... je te l'avais dit, c'est louche ce truc la !) : Ca va nous servir à malloc-er les tableaux parceque le NB_truc correspondera a la taille du tableau truc. 
+
+On écrit la fonction void init_cases(ccase ** c,int * nb_case) : Le but de cette fonction est de creer un tableau de type "ccase", de l'initialiser de de le stocker dans le premier paramètre.
+Tu l'aura deviné, ce tableau décrit les propriétés des types de sols.
+Pour chaque case de notre enum, on stoque dans la case correspondante du tableau : 
+-"name" qui est une chaine de caracteres pour nommer notre type (c'est le nom qui apparaîtra dans l'éditeur de map).
+-"texture" qui prend le retour de l'appel de fonction Load_image. Load_image prend en paramètre le nom de la texture du sol (dont l'extension).
+-"model" est la chaine de caractere qui correspond au nom du fichier de l'objet 3D (sans l'extension) à mettre sur la case. Il faut mettre NULL pour nous le dire.       !!!nous dire quoi???
+-"objet" qui prend le retour Load_objet qui elle même prend en parametre le nom de l'objet 3D (qui devrait être le même que juste au dessus) et le ratio avec lequel on doit l'afficher. Si il n'y a pas d'objet on met "objet" à NULL.
+-"accessible" prend 1 si les agents peuvent aller sur cette case 0 sinon.
+on écrit ensuite la fonction qui servira a liberer le tableau : void free_case (ccase * cases, int nb_case UNUSED)
+
+Maintenant commence la partie interessante : On écrit les opérateurs. 
+On a deux types d'opérateurs : les opérateurs terminaux, et les autres.
+Un opérateur terminal (comme son nom l'indique) termine l'enchaînement des actions.
+Un opérateur prend en paramètre un pointeur sur une fonction primitive, un pointeur sur un agent, et un entier qui correspond a un argument. L'operateur a plusieurs choses à faire : il doit appeller la primitive qui prend l'agent et l'argument en paramètre et selon de si il est satisfait avec ce qu'a fait la primitive (si elle a retourné "1" ou "0" par exempte) doit décider de si on passe à l'action suivante en augmentant de 1 l'entier agent->tache. 
+/*a quoi sert le retour de l'op ?*/
+Ensuite on écrit la fonction void init_operators(operator ** op,int * nb_op) qui va creer le tableau de type operator et de l'initialiser : 
+-"name_op" prend une chaîne de caractères qui correspond à son nom.
+-"op" prend le pointeur sur la fonction operateur écrite juste avant.
+et sans refléchir a ce que tu fais, tu me met le nom du fichier image (à afficher dans le taskbrowser) dans le tableau s de la même fonction, c'est pour te simplifier la vie que je l'ai mis la, alors tu arretes de râler. Non mais oh... hein !
+
+Encore une fois on écrit la fonction qui va liberer le tableau : void free_op (operator * op,int nb_op)
+
+Les primitives ! c'est là que tu vas pouvoir laisser libre cours à ton imagination...
+Comme je l'ai déjà dit une primitive prend en paramètre un agent et un entier argument. (Regarde la partie qui décrit les arguments avant de te lancer peut être ?). Aucune restriction, si ce n'est celle que tu as déterminé pour le bon fonctionnement de tes opérateurs. 
+Comme d'habitude on écrit void init_primitives(primitive ** p,int * nb_p) qui va créyer un tableau qui vaut à nos primitives. 
+-"name_p" prend une chaîne de caractères qui correspond à son nom. 
+-"p" prend le pointeur sur la fonction primitive correspondante.
+Et tu fais pareil avec le tableau "s" et le nom de l'image pour le taskbrowser.
+
+On écrit ensuite void free_p(primitive * op,int nb_op) qui sert à (tu l'aura deviné... ou alors t'es vraiment con) liberer le tableau des primitives.
+
+
+  (*p)[DIE].name_p = "Mourir";
+  (*p)[DIE].p = die;
+  s[DIE] = "p_mort.png";
+
+//**//
+
+du gros caca zizi pouette...
+
+bon la propagation ejaculatoire : 
+
+Pour commu*niquer* entre eux nos agents utilisent l'environment en y propagant un stimulus qui peut representer une odeur par exemple. Si on propage une odeur avec une force de 10 sur une case, toutes les cases autour de celle ci sont marquées avec 10 moins la distance la plus courte entre les deux cases en question. 
+Exemple : 
+
+[schema de propagation ?]
+
+En avancant dans la finalisation de la bibliotheque des fourmis le nombre de propagations et de depropagations de stimuli a augmenté beaucoup plus que ce aue nous avions prévu... Au point ou le logiciel etait devenu inutilisable parceque chaque tour prenait parfois une 15aine de secondes. 
+En regardant les algorithmes que nous avions fait nous nous sommes rendus compte que leurs complexité était... comment dire... impressionnante ? ou... vachement beaucoup ? On rappellait en récursif sur les 8 cases autours de la case actuelle... donc une complexité de l'ordre de 8 puissance n. Bof, hein ? Mais d'un autre coté, qu'est ce que ca avait été simple à écrire comme ca ! 
+Donc on du trouver un autre systeme pour nos algorithmes. 
+La gestion des obstacles est tres compliquée en itératif : selon d'où on vient, selon le sens de l'obstacle il nous faut une reponse différente. Parcontre tant qu'il n'y a pas d'obstacles il suffit d'une simple boucle "for" pour parcourir les cases sur la ligne verticale et la ligne horizontale.
+En voulant gagner du temps comme ca, nous avons opter pour ceci : un algorithme récursif qui prend en parametres (entre autres) le sens dans lequel il doit continuer : Tous, Nord, Sud, Est, Ouest, Nord-Est, Nord-Ouest, Sud-Est, Sud-Ouest.
+Si le sens vaut à le Nord, c'est la simple boucle for dont on parlait avant. ensuite si par exemple en montant (vers le nord) on trouve un obstacle sur notre droite, on rappel notre fonction recursive juste apres l'obstacle avec comme sens le vaut a le Nord Est. 
+
+Si le sens est une diagonale (le Nord Est par exemple), on parcourt la diaganale en question toujours en itératif, en rappellant l'algarithme recursivement vers le Nord pour chaque case au dessus d'une case de la diagonale et vers l'Est a droite de chaque case de la diagonale. 
+
+[schema a faire]
+
+De cette maniere nous contournons toujours les obstacles pour propager correctement nos stimuli tout en ne parcourant chaqe case qu'une seule fois... cooool, hein ?
+
+Mais ca ne suffit pas ! Un stimulus a une durée de vie limitée, et au lieu de passer derrière chacun d'entre eux pour les dépropager nous enregistrons la durée de vie du stimulus lorsqu'on le crée, et nous l'ignorons lorsqu'il a dépassé sa durée de vie. Bien entendu nous supprimons tous les vieux stimuli sur lesquels on tombe pendant la propagation.
+
+Donc même si cette solution a été plus complexe à mettre en place, Bebetes Show est maintenant utilisable, on ne voit plus de freezes pendant les propagations.
+
+bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte bite penis zizi crotte 
+
+
+Il est a present temps de creer la fonction void init_stimuli(behavior ** s,int *nb_sti, float *cycle, int *nombre_cycles_depr). Elle va servir à créer le tableaux de stimuli.
+Pour chacune des cases du tableau nous précisons : 
+
+name_s : c'est une chaîne de caractère qui correspond au nom du stimulus.
+ag : c'est un entier, il prend le type de l'agent qui y repond. avec un penis. zezette. Il suffit d'y mettre l'enum de l'agent correspondant.
+interne : 1 si le stimulus est interne, 0 sinon. Un stimulus interne à un traitement particulier.
+task.force : c'est la valeur du truc quand il est interne important car utilisable par un penis.
+
+La fonction s'occupera aussi de fixer "nb_sti" le nombre de cases dans le tableau, "cycle" qui sera la durée d'un cycle, et finalement nombre_cycles_depr qui sera le nombre de cycles qu'un stimulus reste sur la carte avant d'etre supprimer.
+Pour le traitement des stimuli internes : à chaque fois qu'on exécute la discrimination des taches d'un agent on exécute la première action de tous les stimuli internes. Cela peut servir pour calculer le niveau de faim d'un agent, qui est une donné non présente dans l'environment sinon.
+
+La fonction void free_sti(behavior * stimuli) sert ensuite à faire caca.
+
+[Attention, il y a un commentaire marrant et agréable qui rend la lecture du manuel plus agréable qu'elle devrait l'etre, a supprimer]
+
+
+
+On écrit la fonction void init_agents(agent ** a,int * nb_ag) sert à... comme son nom l'indique... initialiser les primitives et les opérateurs. a hahaha c'était une blague, c'était pour que julien ait qqchose a supprimer, sinon il va s'ennuyer. c'est les agents qu'elle initialise. haha.
+Elle doit mettre la taille du tableau dans nb_ag.
+Pour chaque type d'agent :
+
+name_ag : Une chaîne de caractères qui décrit le nom de l'agent.
+ag : l'entier qui correspond au type de l'agent, c'est l'entrée de l'enum correspondante.
+ratio : c'est le ratio avec lequel l'objet 3D doit être affiché.
+nom_mod : c'est le nom du fichier de l'objet 3D à utiliser, mais sans l'extension et le numéro de frame ("x.lbo").
+
+On passe aux objets : void init_objets(objet ** o,int * nb_obj). Pour changer nous allons mallocer un tableau, et stocker la taille du tableau en question dans nb_obj.
+Ensuite pour chaque type d'objet :
+
+name_obj : c'est une putain de chaîne de caractère qui correspond au nom de ton gros cul.
+obj : c'est l'entier qui correspond au type de l'objet, c'est l'entrée correspondante dans l'enum.
+nom_mod : c'est nom du modèle 3D à utiliser.
+crea_taux : c'est le taux auquel ce type d'objet doit reapparaitre aléatoirement.
+
+La fonction void free_objs(objet * ob,int nb_obj UNUSED) va servir a liberer le tableau.
+
+Les primoutives : void init_primoutives()
+c'est l'image qui s'affichera au dessus de l'agent pour chaque primitive que tu as ecrit.
+Dans chaque case met directement le retour de la fonction Load_image("nom de ton image.tga").
+
+Enstuite void init_arg(argument ** arg, behavior * sti, agent * ag, objet * obj, int * nb_arg, int nb_ag, int nb_sti, int nb_obj) on ne devrait pas avoir besoin d'y toucher, cette fonction ira chercher tous tes agents, stimuli et objets qu'on a crées. 
+Pas touche void free_arg(argument * a,int nb_arg UNUSED) non plus.
+
+On va a nouveau s'amuser un peu : nous allons écrire les interactions. On en écrit autant que prévu dans l'enum. 
+int mon_interaction(picked * clicked).
+
+Le type picked a plusieurs champs qui nous seront utile pour écrire nos interactions :
+"x" et "y" sont les coordonnées en entiers qui correspondent à l'endroit où l'utilisateur a cliquer. "clicked" est un pointeur vers l'objet, l'agent ou la case sur laquelle il a cliqué, et le champ "type" pour pouvoir transtypé le pointeur correctement. Une fois de plus laisse libre cours à ton imagination. 
+
+Il faut ensuite écrire void init_iaction (iaction **ia,int *nb_ia) où l'on va créer le tableau des interactions. On stock la taille du tableau dans nb_ia et pour chaque interaction :
+-name_ia : le nom de l'interaction.
+-ia : le pointeur sur la fonction interaction qu'on a écrit plus haut.
+-i : juste un entier dont on a besoin qui va de 0 en s'incrémentant de 1 pour chaque case.
+
+void free_iaction (iaction *ia,int nb_ia) servira ensuite à liberer le tableau.
+
+Et finalement viennent les fonctions user_to, user_cycle_to, user_ta, user_cycle_ta qui servent pour tes traitements : 
+-user_to est appellé avec chaque objet, à chaque tour
+-user_ta est appellé avec chaque agent, à chaque tour
+-user_cycle_to est appellé avec chaque objet une fois tous les cycles
+-user_cycle_ta est appellé avec chaque agent une fois tous les cycles

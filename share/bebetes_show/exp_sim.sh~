@@ -1,0 +1,3 @@
+#!/bin/bash
+
+tar cjf ~/${1}.sim.bbs ~/.bebetes_show/save/${1}
