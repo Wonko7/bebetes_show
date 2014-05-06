@@ -921,14 +921,17 @@ static GtkTreeModel * create_and_fill_save ()
       return(0);
     }
 
-  readdir(d);
-  readdir(d);
+  //readdir(d);
+  //readdir(d);
 
   while ((d1 = readdir(d)))
-    {
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,COL_NAME,(*d1).d_name,COL_ID,i,-1);
-    }
+  {
+	  if (!strcmp(d1->d_name, ".") || !strcmp(d1->d_name, "."))
+		  continue;
+
+	  gtk_list_store_append (store, &iter);
+	  gtk_list_store_set (store, &iter,COL_NAME,(*d1).d_name,COL_ID,i,-1);
+  }
 
   closedir(d);
   free(s);
@@ -1262,44 +1265,41 @@ void set_selected_lib(GtkWidget *combo)
 
 GtkWidget *create_sel_lib ()
 {
-  int j = 0, i = 0;
-  DIR *d;
-  struct dirent *d1;
-  char * s;
-  GtkWidget *cb;
+	int j = 0, i = 0;
+	DIR *d;
+	struct dirent *d1;
+	char * s;
+	GtkWidget *cb;
 
-  s = my_concat(chemin,"/../lib");
-  cb = gtk_combo_box_new_text ();
+	s = my_concat(chemin,"/../lib");
+	cb = gtk_combo_box_new_text ();
 
-  d = opendir(s);
-  if (!d)
-    {
-      caca(s);
-      caca("Ouvrirture le du repertoire pas arrivé");
-      return(0);
-    }
-
-  readdir(d);
-  readdir(d);
-
-  while ((d1 = readdir(d)))
-    {
-      if (!strcmp(d1->d_name,default_lib))
-	j = i;
-      if (is_bbs_lib(d1->d_name))
+	d = opendir(s);
+	if (!d)
 	{
-	  gtk_combo_box_append_text(GTK_COMBO_BOX(cb),d1->d_name);
-	  i++;
+		caca(s);
+		caca("Ouvrirture le du repertoire pas arrivé");
+		return(0);
 	}
-    }
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX(cb),j);
-  g_signal_connect (cb, "changed", G_CALLBACK (set_selected_lib), NULL);
+	while ((d1 = readdir(d)))
+	{
+		if (!strcmp(d1->d_name,default_lib))
+			j = i;
+		if (is_bbs_lib(d1->d_name))
+		{
+			gtk_combo_box_append_text(GTK_COMBO_BOX(cb),d1->d_name);
+			i++;
+		}
+	}
 
-  free(s);
-  closedir(d);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(cb),j);
+	g_signal_connect (cb, "changed", G_CALLBACK (set_selected_lib), NULL);
 
-  return(cb);
+	free(s);
+	closedir(d);
+
+	return(cb);
 }
 
 
