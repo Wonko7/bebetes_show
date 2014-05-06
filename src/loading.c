@@ -110,7 +110,7 @@ char *default_lib = "lib_bbs_behavior.so";
 extern GtkWidget *fbox22, *fbox11, *onglet_sv, *onglet_op;
 
 /**************************************************
- *  ECRIRE BITE A BITE...  ou pas en fait... ****** 
+ *  ECRIRE BITE A BITE...  ou pas en fait... ******
  **************************************************/
 
 
@@ -137,7 +137,7 @@ int is_bbs_lib(char *s)
 
 
 /**************************************************
- *  OBJ 3D  *************************************** 
+ *  OBJ 3D  ***************************************
  **************************************************/
 
 
@@ -150,7 +150,7 @@ int reload_obj3D()
 
   for(i=0; i<nb_obj; i++)
     objets[i].mod = create_3Dobj(objets[i].nom_mod);
-  
+
   for (i=0; i < nb_case;i++)
     if (cases[i].model)
       cases[i].objet->model = create_3Dobj(cases[i].model);
@@ -160,7 +160,7 @@ int reload_obj3D()
 
 
 /**************************************************
- *  TEXTURES  ************************************* 
+ *  TEXTURES  *************************************
  **************************************************/
 
 GLuint * Load_image(char * name)
@@ -168,7 +168,7 @@ GLuint * Load_image(char * name)
   GLuint * texture_id;
   FILE * f;
   char *t3,*t7;
-  
+
   t3 = mega_cct(5,save_dir,"/",save,"/textures/",name);
   t7 = mega_cct(3,chemin,"/../share/bebetes_show/textures/",name);
 
@@ -194,7 +194,7 @@ int Load_icone(char * name)
   int texture_id, l;
   FILE * f;
   char * t;
-  
+
   t = my_concat("",name);
   //  l = strlen(t);
   // t[l-3] = 'b';
@@ -203,11 +203,11 @@ int Load_icone(char * name)
   texture_id = Load_Texture(t);
   free(t);
   return(texture_id);
-} 
+}
 bon elle je la laisse par nostalgie...*/
 
 /**************************************************
- *  DYN LIBS  ************************************* 
+ *  DYN LIBS  *************************************
  **************************************************/
 
 
@@ -231,14 +231,14 @@ void free_libs()
     free_iaction(iactions,nb_iaction);
   if (stats)
     free_stats();
- 
-  if (lib) 
+
+  if (lib)
     dlclose(lib);
 }
 
 void load_dlib(char * where)
 {
-  char * tmp_str;  
+  char * tmp_str;
   void * (*init_stimuli)();
   void * (*init_agents)();
   void * (*init_objets)();
@@ -250,17 +250,17 @@ void load_dlib(char * where)
   void * (*init_stats)();
 
   /************************************
-   *  reload the dl  ****************** 
+   *  reload the dl  ******************
    ************************************/
 
   free_libs();
   lib = dlopen(where,RTLD_NOW);
- 
+
   if ((tmp_str = dlerror()))
     puts(tmp_str);
 
   /************************************
-   *  reload our stuff  *************** 
+   *  reload our stuff  ***************
    ************************************/
 
   *(void **) (&init_stimuli) = dlsym(lib,"init_stimuli");
@@ -273,7 +273,7 @@ void load_dlib(char * where)
   *(void **) (&init_iaction) = dlsym(lib,"init_iaction");
   *(void **) (&init_stats) = dlsym(lib,"init_stats");
 
-  *(void **) (&user_ta) = dlsym(lib,"user_ta"); 
+  *(void **) (&user_ta) = dlsym(lib,"user_ta");
   *(void **) (&user_to) = dlsym(lib,"user_to");
   *(void **) (&user_cycle_ta) = dlsym(lib,"user_cycle_ta");
   *(void **) (&user_cycle_to) = dlsym(lib,"user_cycle_to");
@@ -303,13 +303,13 @@ void load_dlib(char * where)
   init_iaction(&iactions,&nb_iaction);
   init_stats(&stats,&nb_stats);
   init_stats_var();
-  
+
   if ((tmp_str = dlerror()))
     puts(tmp_str);
 }
 
 /**************************************************
- *  SAUVEGARDE DE CETTE SALOPE DE MAP  ************ 
+ *  SAUVEGARDE DE CETTE SALOPE DE MAP  ************
  **************************************************/
 
 int write_map(char * dsave)
@@ -413,7 +413,7 @@ int read_map(char * dsave)
 }
 
 /**************************************************
- *  SAUVEGARDE OBJETS  **************************** 
+ *  SAUVEGARDE OBJETS  ****************************
  **************************************************/
 
 
@@ -421,7 +421,7 @@ static inline t_objet mk_obj(FILE *s, int is_c)
 {
   t_objet po;
   struct s_objet o;
-  
+
   fscanf(s,"cx:%i cy:%i x:%f y:%f z:%f rx:%f ry:%f rz:%f ratio:%f val:%f step:%i speed:%i type:%i tps:%lg\n", &(o.case_x), &(o.case_y), &(o.x), &(o.y), &(o.z), &(o.rx), &(o.ry), &(o.rz), &(o.ratio), &(o.valeur), &(o.step), &(o.speed), &(o.type),&(o.tps));
   po = creer_objet(objets[o.type].nom_mod, o.case_x, o.case_y, o.rx, o.ry, o.rz, o.ratio, o.type,!is_c);
   po->z = o.z;
@@ -514,7 +514,7 @@ int read_obj(char * dsave)
 }
 
 /**************************************************
- *  SAUVEGARDE AGENTS  **************************** 
+ *  SAUVEGARDE AGENTS  ****************************
  **************************************************/
 
 t_agent mk_ag(FILE *s, int is_c)
@@ -545,12 +545,12 @@ t_agent mk_ag(FILE *s, int is_c)
   an2->tache = an.tache;
   an2->tps = an.tps;
   an2->type = an.type;
-  
+
   for (ii=0; ii<nb_sti; ii++)
     fscanf(s,"p:%f s:%f f:%f\n",&(an2->stimuli[ii].poids),&(an2->stimuli[ii].seuil),&(an2->stimuli[ii].force));
-  
+
   fscanf(s,"is_cad_ag:%i\n",&test);
-  
+
   if (test == 1)
     {
       an2->caddie = mk_ag(s,1);
@@ -571,7 +571,7 @@ void wr_ag(FILE *s, t_agent an)
 
   /* données ag */
   fprintf(s,"x:%f y:%f z:%f xgoto:%f ygoto:%f zgoto:%f rx:%f ry:%f rz:%f cx:%i cy:%i ci:%i ratio:%f step:%i tps:%f speed:%f naa:%f na:%f age:%i en_cours:%i tache:%i tps:%g type:%i\n",an->x,an->y,an->z,an->xgoto,an->ygoto,an->zgoto,an->rx,an->ry,an->rz,an->case_x,an->case_y,an->case_index,an->ratio,an->step,an->ac_tps,an->speed,an->naa,an->na,an->age,an->en_cours,an->tache,an->tps,an->type);
-  
+
   /* tab sti */
   for (ii=0; ii<nb_sti; ii++)
     fprintf(s,"p:%f s:%f f:%f\n",an->stimuli[ii].poids,an->stimuli[ii].seuil,an->stimuli[ii].force);
@@ -668,7 +668,7 @@ int read_ag(char * dsave)
 
   for (i=0; i<tot; i++)
     mk_ag(s,0);
- 
+
   free(an);
   free(t1);
   fclose(s);
@@ -679,7 +679,7 @@ int read_ag(char * dsave)
 
 
 /**************************************************
- *  LOAD/SAVE BEHAVIOR  *************************** 
+ *  LOAD/SAVE BEHAVIOR  ***************************
  **************************************************/
 
 int write_sti(char * save)
@@ -710,7 +710,7 @@ int write_sti(char * save)
       fprintf(s,"#interruption:\n");
       if (stimuli[i].task.interruption)
 	fprintf(s,"p:%i op:%i a:%i\n",stimuli[i].task.interruption->p,stimuli[i].task.interruption->op,stimuli[i].task.interruption->arg);
-      else      
+      else
 	fprintf(s,"p:%i op:%i a:%i\n",-1,-1,-1);
 
       fprintf(s,"#brick:\n");
@@ -772,10 +772,10 @@ int read_sti(char * save)
       end_locale();
       return(0);
     }
-  
+
   fscanf(s,"%i\n",&im);
 
-  if (im != nb_sti) 
+  if (im != nb_sti)
     {
       gtk_caca("Conflit de versions entre le tableau de stimuli de la library et celui enregistre dans le fichier");
       caca("Conflit de versions entre le tableau de stimuli de la library et celui enregistré dans le fichier");
@@ -824,7 +824,7 @@ int read_sti(char * save)
 }
 
 /**************************************************
- *  SAUVEGARDE DE LA CAMERA  ********************** 
+ *  SAUVEGARDE DE LA CAMERA  **********************
  **************************************************/
 
 int write_cam(char * dsave)
@@ -894,7 +894,7 @@ int read_cam(char * dsave)
 }
 
 /**************************************************
- *  GTK STUFF  ************************************ 
+ *  GTK STUFF  ************************************
  **************************************************/
 
 
@@ -910,7 +910,7 @@ static GtkTreeModel * create_and_fill_save ()
   s = my_concat("",save_dir);
 
   store = gtk_list_store_new (NUM_COLS, G_TYPE_STRING, G_TYPE_UINT);
-  
+
 
   d = opendir(s);
   if (!d)
@@ -920,14 +920,14 @@ static GtkTreeModel * create_and_fill_save ()
       caca("Ouvrirture le du repertoire pas arrivé");
       return(0);
     }
-  
+
   readdir(d);
   readdir(d);
 
   while ((d1 = readdir(d)))
     {
       gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,COL_NAME,(*d1).d_name,COL_ID,i,-1);  
+      gtk_list_store_set (store, &iter,COL_NAME,(*d1).d_name,COL_ID,i,-1);
     }
 
   closedir(d);
@@ -945,7 +945,7 @@ gboolean view_sel_save (GtkTreeSelection * selection UNUSED,
   GtkTreeIter iter;
   gchar *name;
   gint id;
-  
+
   if (gtk_tree_model_get_iter(model, &iter, path))
     {
       gtk_tree_model_get(model, &iter, COL_NAME, &name, -1);
@@ -1034,7 +1034,7 @@ int loaddd()
 
   t2 = mega_cct(4,save_dir,"/",save,"/lib");
   t3 = my_concat(chemin,"/../lib/lib_bbs_behavior.so");
-  
+
   dir = opendir(t2);
   if (!dir)
     {
@@ -1044,18 +1044,19 @@ int loaddd()
       free(t3);
       return(0);
     }
-  readdir(dir);
-  readdir(dir);
-  d1 = readdir(dir);
-  if (d1)
-    {
-      t4 = mega_cct(3,t2,"/",d1->d_name);
-      load_dlib(t4);
-      free(t4);
-    }
-  else
-    load_dlib(t3);
-  closedir(dir);
+
+   d1 = readdir(dir);
+   while (d1 && !is_bbs_lib(d1->d_name))
+	   d1 = readdir(dir);
+   if (d1)
+   {
+	   t4 = mega_cct(3,t2,"/",d1->d_name);
+	   load_dlib(t4);
+	   free(t4);
+   }
+   else
+	   load_dlib(t3);
+   closedir(dir);
 
   t4 = mega_cct(3,save_dir,"/",save);
 
@@ -1116,7 +1117,7 @@ int evb_new ()
   if (mkdir(t3,00755))
     {
       gtk_caca("Le dossier existe deja, ou vous n'avez pas les droits d'ecritures");
-      free(t3);  
+      free(t3);
       return(1);
     }
   for (; i>=0; i--)
@@ -1127,7 +1128,7 @@ int evb_new ()
     }
 
   redraw_list();
-  free(t3);  
+  free(t3);
 
   if (selected_lib && strcmp(selected_lib,default_lib))
     {
@@ -1160,7 +1161,7 @@ int evb_new ()
 int evb_load ()
 {
   char *t;
-  
+
   t = "Attention, si vous n'avez pas enregistre la simulation en cours, vous perdez les modifications que vous y avez apporte. Voulez vous continuer ?";
 
   if (!selected_sa[0])
@@ -1174,7 +1175,7 @@ int evb_load ()
 
   save = selected_sa;
   loaddd();
-  
+
   return(1);
 }
 
@@ -1206,7 +1207,7 @@ int evb_save ()
 int evb_suppr ()
 {
   char *t,*t2;
-  
+
   if (!selected_sa || !selected_sa[0])
     {
       gtk_caca("Aucune simulation de selectionne !");
@@ -1218,7 +1219,7 @@ int evb_suppr ()
       gtk_caca("On ne peut pas supprimer une simulation qui est en cours");
       return (1);
     }
-  
+
   t = mega_cct(3, "Etes vous sur de vouloir supprimer la simulation ", selected_sa, " ?");
   t2 = mega_cct(3,save_dir,"/",selected_sa);
 
@@ -1235,7 +1236,7 @@ int evb_suppr ()
 int save_auto ()
 {
   char *t4;
-  
+
   if (!save)
     return(1);
 
@@ -1277,7 +1278,7 @@ GtkWidget *create_sel_lib ()
       caca("Ouvrirture le du repertoire pas arrivé");
       return(0);
     }
-  
+
   readdir(d);
   readdir(d);
 
@@ -1302,7 +1303,7 @@ GtkWidget *create_sel_lib ()
 }
 
 
-GtkWidget * create_loading() 
+GtkWidget * create_loading()
 {
   /*                           logo;  tout; */
   GtkWidget *h_box_principale, *v_bd, *v_bg, *h_bnew, *h_bce,
@@ -1311,7 +1312,7 @@ GtkWidget * create_loading()
   char * tmp_str;
 
   selected_sa = malloc(sizeof (char));
-  
+
   /* init objets : */
   h_box_principale = gtk_hbox_new(1,2);
   gtk_container_set_border_width (GTK_CONTAINER (h_box_principale), 10);
@@ -1324,7 +1325,7 @@ GtkWidget * create_loading()
   gtk_container_add (GTK_CONTAINER (fakebox), list);
   lib_combo = create_sel_lib();
 
-  
+
   tmp_str = my_concat(chemin,"/../share/bebetes_show/textures/logo/logo.jpg");
   logo = gtk_image_new_from_file(tmp_str);
   free(tmp_str);
@@ -1345,14 +1346,14 @@ GtkWidget * create_loading()
   /* cacaté */
   gtk_container_add (GTK_CONTAINER (h_box_principale), v_bg);
   gtk_container_add (GTK_CONTAINER (h_box_principale), v_bd);
-  
+
   /* a droite */
   gtk_container_add (GTK_CONTAINER (v_bd), logo);
 
   /* a gauche */
-  gtk_box_pack_start(GTK_BOX (v_bg),h_bnew,FALSE,FALSE,10);  
-  gtk_box_pack_start(GTK_BOX (v_bg),fakebox,1,1,10);  
-  gtk_box_pack_start(GTK_BOX (v_bg),h_bce,FALSE,FALSE,10);  
+  gtk_box_pack_start(GTK_BOX (v_bg),h_bnew,FALSE,FALSE,10);
+  gtk_box_pack_start(GTK_BOX (v_bg),fakebox,1,1,10);
+  gtk_box_pack_start(GTK_BOX (v_bg),h_bce,FALSE,FALSE,10);
 
   /* en haut */
   gtk_container_add (GTK_CONTAINER (h_bnew), l_new);
