@@ -921,9 +921,6 @@ static GtkTreeModel * create_and_fill_save ()
       return(0);
     }
 
-  //readdir(d);
-  //readdir(d);
-
   while ((d1 = readdir(d)))
   {
 	  if (!strcmp(d1->d_name, "..") || !strcmp(d1->d_name, "."))

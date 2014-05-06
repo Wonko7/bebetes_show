@@ -387,11 +387,10 @@ int supprec (char *d)
       return(0);
     }
 
-  readdir(dir);
-  readdir(dir);
-
   while ((d1 = readdir(dir)))
     {
+      if (d1->d_name[0] == '.')
+        continue;
       f = mega_cct(3,d,"/",d1->d_name);
       if (stat(f,&sf))
 	{
@@ -478,11 +477,10 @@ int cp_rec(char *src, char *dest)
       return(0);
     }
 
-  readdir(dir);
-  readdir(dir);
-
   while ((d1 = readdir(dir)))
     {
+      if (d1->d_name[0] == '.')
+        continue;
       fsrc = mega_cct(3,src,"/",d1->d_name);
       fdest = mega_cct(3,dest,"/",d1->d_name);
 
@@ -545,17 +543,18 @@ int create_save_dir()
 
   /* les bonnes libs */
   d = opendir(t);
-  readdir(d);
-  readdir(d);
 
   while ((d1 = readdir(d)))
     {
+      if (d1->d_name[0] == '.')
+        continue;
       fsrc = mega_cct(4,t,"/",d1->d_name,"/lib");
       if ((dd = opendir(fsrc)))
 	{
-	  readdir(dd);
-	  readdir(dd);
 	  d2 = readdir(dd);
+          while (d2->d_name[0] == '.')
+	    d2 = readdir(dd);
+
 	  if (d2)
 	    {
 	      free(fsrc);
@@ -575,8 +574,3 @@ int create_save_dir()
 
   return(1);
 }
-
-/* alexandre... t'es un putain de connard */
-/* alexandre... t'es un putain de connard */
-/* alexandre... t'es un putain de connard */
-/* alexandre... t'es un putain de connard */

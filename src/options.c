@@ -392,11 +392,10 @@ static GtkTreeModel * create_and_fill_save (char *s, int mid)
       return(0);
     }
   
-  readdir(d);
-  readdir(d);
-
   while ((d1 = readdir(d)))
     {
+      if (d1->d_name[0] == '.')
+        continue;
       if (is_bbs_lib(d1->d_name) || mid != 2)
 	{
 	  gtk_list_store_append (store, &iter);
