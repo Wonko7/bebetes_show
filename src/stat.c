@@ -934,6 +934,9 @@ void resized ()
 	link = &(stats[i].valeurs);
 	tx = gtk_plot_data_get_x(link->dataset,&nx);
 	ty = gtk_plot_data_get_y(link->dataset,&ny);
+
+	if (!tx || !ty)
+		return;
 	
 	gtk_plot_axis_set_ticks(gtk_plot_get_axis(link->dataset->plot, GTK_PLOT_AXIS_LEFT),MAX(floor((double)(link->omax - link->omin)/height*30),1.),1);      
 	
