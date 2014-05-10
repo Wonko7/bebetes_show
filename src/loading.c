@@ -1062,6 +1062,7 @@ int loaddd()
 
   reload_obj3D();
 
+  get_tps();
   read_map(t4);
   read_sti(t4);
   read_ag(t4);

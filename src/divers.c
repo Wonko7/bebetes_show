@@ -35,15 +35,15 @@ extern GtkWidget *note_fucking_book;
 extern int vitesse_simulation;
 int caca_q_rep;
 extern char *save_dir;
-int ogl_tps_loading = 0;
+int ogl_tps_loading = 1;
 /*tps_total d'une partie*/
 unsigned long tps_tot = 0;
 float tps_tot_ac = 0.0;
 int cy_depr = 0;
-double cpu_time = 0.0;
-double moy [] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+//double cpu_time = 0.0;
+//double moy [] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 double tps_cam = 0.0;
-int moyhead = 0;
+//int moyhead = 0;
 
 
 /* locale */
@@ -102,6 +102,29 @@ int gtk_caca_q(char *s)
 
 double get_tps()
 {
+	struct timespec			t;
+	static struct timespec		old_time;
+	double				je_suis_moche = 10;
+
+
+	clock_gettime(CLOCK_REALTIME, &t);
+	tps_cam = ((t.tv_sec - old_time.tv_sec) + (t.tv_nsec - old_time.tv_nsec) * 0.000000001) * je_suis_moche;
+	old_time = t;
+
+	tps_tot_ac += tps_cam;
+
+	if (tps_tot_ac > 1.0) // why?
+	{
+		tps_tot += (int) tps_tot_ac;
+		tps_tot_ac -= 1.0;
+	}
+
+	return tps_cam * vitesse_simulation;
+}
+
+#if 0
+double get_tps()
+{
   /*long t;*/
   double res, mm;
   int i;
@@ -133,7 +156,7 @@ double get_tps()
       tps_tot_ac = 0.0;
     }
 
-  /* moy */
+  /* moy... wtf? oh zero. lol. */
   if (moyhead == 40)
     moyhead = 0;
   moy[moyhead++] = res;
@@ -155,7 +178,7 @@ double get_tps()
     }
   else
     if (vitesse_simulation == -1)
-      mm = (double) RAFR / 1000.0;
+      mm = 1.0; // (double) RAFR / 00.0;
     else
       mm /= (double) 40.0 / (double) vitesse_simulation;      
 
@@ -187,7 +210,8 @@ double get_tps()
   **    printf("Cycles CPUs %li - %li - res : %g",t,CLOCKS_PER_SEC,res);
   **    puts("");
   */
-
+  get_tps2();
+  printf("old: %f\n", mm);
   return mm;
 } 
 
@@ -201,6 +225,7 @@ int majgtktime ()
 
   return 1;
 }
+#endif
 
 char *mega_cct (int i,...)
 {
