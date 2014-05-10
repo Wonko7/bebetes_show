@@ -179,6 +179,7 @@ static GtkWidget * create_view_and_model_agents (void)
   path = gtk_tree_path_new_from_string("0");
   gtk_tree_selection_select_path (selection,path);
   //free(path);
+  gtk_tree_path_free(path);
   gtk_tree_selection_set_select_function(selection, view_sel_agents, NULL, NULL);
   gtk_tree_selection_set_mode(selection,GTK_SELECTION_BROWSE);
 
@@ -269,6 +270,7 @@ static GtkWidget * create_view_and_model_stimuli (void)
   path = gtk_tree_path_new_from_string("0");
   gtk_tree_selection_select_path (selection,path);
   //free(path);
+  gtk_tree_path_free(path);
   gtk_tree_selection_set_select_function(selection, view_sel_stimuli, NULL, NULL);
   gtk_tree_selection_set_mode(selection,GTK_SELECTION_BROWSE);
 
@@ -358,6 +360,7 @@ static GtkWidget * create_view_and_model_ops (void)
   path = gtk_tree_path_new_from_string("0");
   gtk_tree_selection_select_path (selection,path);
   //free(path);
+  gtk_tree_path_free(path);
   gtk_tree_selection_set_select_function(selection, view_sel_ops, NULL, NULL);
   gtk_tree_selection_set_mode(selection,GTK_SELECTION_BROWSE);
 
@@ -448,6 +451,7 @@ static GtkWidget * create_view_and_model_primitives (void)
   path = gtk_tree_path_new_from_string("0");
   gtk_tree_selection_select_path (selection,path);
   //free(path);
+  gtk_tree_path_free(path);
   gtk_tree_selection_set_select_function(selection, view_sel_primitives, NULL, NULL);
   gtk_tree_selection_set_mode(selection,GTK_SELECTION_BROWSE);
 
