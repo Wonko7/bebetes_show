@@ -4,7 +4,7 @@
 /** gl *****************************************************/
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkgl.h>
+#include <gtkgl/gtkglarea.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
@@ -506,17 +506,11 @@ void realize (GtkWidget *widget, gpointer data UNUSED)
 
   realized = 1;
 
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (widget);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
-  int Height = widget->allocation.height, Width = widget->allocation.width;
-
-  /*** OpenGL BEGIN ***/
-  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
+  if (!gtk_gl_area_make_current (GTK_GL_AREA (widget)))
     return;
 
-  /* init agent fourmi */
-  /* a supprimer !!!*/
-  
+  int Height = widget->allocation.height, Width = widget->allocation.width;
+
   /* init_libs */
   t1 = my_concat(chemin,save_dir);
   t4 = my_concat(t1,"/");
@@ -547,15 +541,9 @@ void realize (GtkWidget *widget, gpointer data UNUSED)
   free(t4);
   free(t5);
   
-  /* Qu'est ce qu'il fou la se connard ? il aurait du sauter y'a longtemps !! */
-  /* hop c'est ce qu'il fait */
-  /* reload_obj3D(); */
-
-  /*  evb_load();*/
-
   glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-  glClearDepth(1.0);			
-  glDepthFunc(GL_LESS);			
+  //glClearDepth(1.0);			
+  //glDepthFunc(GL_LESS);			
   glEnable(GL_DEPTH_TEST);		
   glShadeModel(GL_SMOOTH); 
   glMatrixMode(GL_PROJECTION);
@@ -576,8 +564,8 @@ void realize (GtkWidget *widget, gpointer data UNUSED)
   
   glMatrixMode(GL_MODELVIEW);
 
-  gdk_gl_drawable_gl_end (gldrawable);
-  
+  glFlush();
+
     glColorMaterial(GL_FRONT,GL_AMBIENT_AND_DIFFUSE);
   //glColorMaterial(GL_FRONT,GL_AMBIENT);
   glEnable( GL_COLOR_MATERIAL );
@@ -602,12 +590,10 @@ void realize (GtkWidget *widget, gpointer data UNUSED)
 /*reshape*/
 gboolean configure_event (GtkWidget *widget, GdkEventConfigure *event UNUSED, gpointer data UNUSED)
 {
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (widget);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
   int Height=widget->allocation.height ,Width=widget->allocation.width;
 
   /*** OpenGL BEGIN ***/
-  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
+  if (!gtk_gl_area_make_current (GTK_GL_AREA (widget)))
     return FALSE;
 
   if (Height==0)	
@@ -625,7 +611,7 @@ gboolean configure_event (GtkWidget *widget, GdkEventConfigure *event UNUSED, gp
 
   gluPerspective(FOVY,(GLfloat)Width/(GLfloat)Height,0.1f,options_profondeur);
   glMatrixMode(GL_MODELVIEW);
-  gdk_gl_drawable_gl_end (gldrawable);
+  glFlush();
   /*** OpenGL END ***/
 
   if (!ramakicaca)
@@ -673,14 +659,9 @@ void picking ()
 gboolean expose_event (GtkWidget *widget, GdkEventExpose *event UNUSED, gpointer data UNUSED)
 {
 
-  GdkGLContext *glcontext = gtk_widget_get_gl_context (widget);
-  GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable (widget);
-      
-      
   /*** OpenGL BEGIN ***/
-  if (!gdk_gl_drawable_gl_begin (gldrawable, glcontext))
+  if (!gtk_gl_area_make_current (GTK_GL_AREA (widget)))
     return FALSE;
-
 
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (afficher_ogl && ogl_tps_loading)
@@ -688,23 +669,16 @@ gboolean expose_event (GtkWidget *widget, GdkEventExpose *event UNUSED, gpointer
       drawt();  
       draw_scene();
     }
-  //traiter_fourmi();
-  gdk_gl_drawable_swap_buffers (gldrawable);
-  gdk_gl_drawable_gl_end (gldrawable);
+  
+  gtk_gl_area_swap_buffers (GTK_GL_AREA (widget));
+  glFlush();
   /*** OpenGL END ***/
-      
+
   gtk_widget_queue_draw(GTK_WIDGET(widget)); /* demande son rafraichissement immédiat */
 
   traiter_fourmi();
   traiter_objet();
-  /*
-  tmp = liste_agent;
-  while(tmp)
-    {
-      action_agent(tmp);
-      tmp=tmp->next;
-    }
-  */
+  
   return TRUE;
 }
 

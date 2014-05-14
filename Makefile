@@ -27,9 +27,10 @@
 ANSI=-ansi
 WARNING=-W -Wall
 GTK_DEPS=`pkg-config --cflags --libs gtk+-2.0`
-GLEXT_DEPS=`pkg-config --cflags --libs gtkglext-1.0`
+#GLEXT_DEPS=`pkg-config --cflags --libs gtkgl`
+GLEXT_DEPS=-I/usr/include/gtkgl-2.0 -Wl,--export-dynamic -pthread -lgtkgl-2.0 -lGLU -lGL -lXmu -lXt -lSM -lICE -lgtk-x11-2.0 -lpangox-1.0 -lX11 -lgmodule-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lglib-2.0 
 GTK_DEPS2=`pkg-config --cflags gtk+-2.0`
-GLEXT_DEPS2=`pkg-config --cflags gtkglext-1.0`
+GLEXT_DEPS2=-I/usr/include/gtkgl-2.0
 DLIB=-rdynamic -ldl -lm
 CLIB=-fPIC -shared -nostartfiles
 GCC=gcc -O2

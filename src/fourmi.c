@@ -4,7 +4,7 @@
 /** gl *****************************************************/
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkgl.h>
+#include <gtkgl/gtkglarea.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
