@@ -4,7 +4,7 @@
 /** gl *****************************************************/
 
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkgl.h>
+#include <gtkgl/gtkglarea.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
@@ -289,11 +289,6 @@ void init_gtk_nfs ()
   c.type = 5;
 
 
-  /* gl */
-  GdkGLConfig *glconfig;
-  /* ** */  
-
-
   /*fakebox_nb = gtk_vbox_new(0,0);*/
   fakebox_lf = gtk_vbox_new(0,0);
 
@@ -379,20 +374,12 @@ void init_gtk_nfs ()
 
 
   /** gl *****************************************************/
-  glconfig = gdk_gl_config_new_by_mode (GDK_GL_MODE_RGB    |
-                                        GDK_GL_MODE_DEPTH  |
-                                        GDK_GL_MODE_DOUBLE);
-  if (glconfig == NULL)
-    exit (1);
+  int attribute[] = { GDK_GL_RGBA, GDK_GL_DOUBLEBUFFER, GDK_GL_DEPTH_SIZE, 1, GDK_GL_NONE };
+
+  drawing_area = gtk_gl_area_new (attribute);
 
   /* Drawing area for drawing OpenGL scene. */
-  drawing_area = gtk_drawing_area_new ();
   gtk_container_set_focus_child(GTK_CONTAINER (table2),drawing_area);
-
-
-
-  /* Set OpenGL-capability to the widget. */
-  gtk_widget_set_gl_capability (drawing_area,glconfig,NULL,TRUE,GDK_GL_RGBA_TYPE);
 
   /*init*/
   g_signal_connect_after (G_OBJECT (drawing_area), "realize",G_CALLBACK (realize), NULL);
@@ -516,8 +503,11 @@ int main(int argc, char *argv[])
   create_save_dir();
 
   /** gl *****************************************************/
+  // g_threads_init();
+  gdk_threads_init();
   gtk_init (&argc, &argv);
-  gtk_gl_init (&argc, &argv);
+  gdk_threads_enter();
+  gdk_gl_query();
 
   /** ** *****************************************************/
 
@@ -543,6 +533,7 @@ int main(int argc, char *argv[])
   /* main truc */
   init_gtk_nfs ();
   gtk_main();
+  gdk_threads_leave();
 
   write_options();
 
