@@ -106,9 +106,21 @@ double get_tps()
 	static struct timespec		old_time;
 	double				je_suis_moche = 10;
 
+	static int			fps = 0;
+	static double			tot = 0;
 
 	clock_gettime(CLOCK_REALTIME, &t);
-	tps_cam = ((t.tv_sec - old_time.tv_sec) + (t.tv_nsec - old_time.tv_nsec) * 0.000000001) * je_suis_moche;
+	tps_cam = ((t.tv_sec - old_time.tv_sec) + (t.tv_nsec - old_time.tv_nsec) * 0.000000001);
+
+	++fps;
+	tot += tps_cam;
+	if (tot >= 1.0)
+	{
+		printf("fps: %i\n", fps);
+		tot = fps =  0;
+	}
+
+	tps_cam *= je_suis_moche;
 	old_time = t;
 
 	tps_tot_ac += tps_cam;
